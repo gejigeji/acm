@@ -1,0 +1,78 @@
+/*{
+ID:jdxu1
+PROG:milk2
+LANG:C
+}*/
+
+#include <stdio.h>
+#include <string.h>
+
+void
+main()
+{
+	FILE *fin,*fout;
+	int i,nmilking,t,tmilk,tnomilk,flag=0,temp;
+	int milking[5000][2];
+	int cur[2];
+
+	fin=fopen("milk2.in","r");
+	fout=fopen("milk2.out","w");
+	
+	fscanf(fin,"%d",&nmilking);
+	for(i=0;i<nmilking;i++)
+		fscanf(fin,"%d %d",&milking[i][0],&milking[i][1]);
+	
+	while(flag!=1)
+	{
+		flag=1;
+		for(i=0;i<nmilking-1;i++)
+		{
+			if(milking[i][0]>milking[i+1][0])
+			{          
+				temp=milking[i+1][0];
+				milking[i+1][0]=milking[i][0];
+				milking[i][0]=temp;
+				temp=milking[i+1][1];
+				milking[i+1][1]=milking[i][1];
+				milking[i][1]=temp;
+				flag=0;
+			}
+		}
+	}
+	
+	
+	tmilk=0;
+	tnomilk=0;
+	cur[0]=milking[0][0];
+	cur[1]=milking[0][1];
+	for(i=1;i<nmilking;i++)
+	{
+		if(milking[i][0]>cur[1])
+		{
+			t=milking[i][0]-cur[1];
+			if(t>tnomilk)
+				tnomilk=t;
+
+			t=cur[1]-cur[0];
+			if(t>tmilk)
+				tmilk=t;
+
+			//cur=&milking[i];
+			cur[0]=milking[i][0];
+			cur[1]=milking[i][1];
+		}
+		else
+		{
+			if(milking[i][1]>cur[1])
+				//cur[0]=milking[i][0];
+				cur[1]=milking[i][1];
+		}
+	}
+
+	t=cur[1]-cur[0];
+	if(t>tmilk)
+		tmilk=t;
+
+	fprintf(fout,"%d %d\n",tmilk,tnomilk);
+	exit(0);
+}

@@ -1,0 +1,66 @@
+/*{
+ID:jdxu1
+PROG:calfflac
+LANG:C
+}*/
+
+#include <stdio.h>
+#include <string.h>
+ 
+int main() {
+    freopen("calfflac.in","r",stdin);
+    freopen("calfflac.out","w",stdout);
+    char source[20001]={0},cr[20001]={0};
+    int i;
+    int len;
+    int max_len=0,max_u,max_v,u,v,len2;
+    char line[81];
+    while(gets(line)!=NULL) {
+        strcat(source,line); cr[strlen(source)-1]=1;
+    }
+    len=strlen(source);
+    for(i=0;i<len;i++) {
+        if((source[i]<'A')||(source[i]>'Z')&&(source[i]<'a')||(source[i]>'z')) continue;
+        u=v=i; len2=-1;
+        while((u>=0)&&(v<=len-1)) {
+            if((source[u]!=source[v])&&(abs(source[u]-source[v])!=32)) break;
+            len2+=2;
+            if(len2>max_len) {
+                max_len=len2;
+                max_u=u; max_v=v;
+            }
+ 
+            u--; v++;
+ 
+            while((u>=0)&&((source[u]<'A')||(source[u]>'Z')&&(source[u]<'a')||(source[u]>'z')))
+                u--;
+            while((v<=len-1)&&((source[v]<'A')||(source[v]>'Z')&&(source[v]<'a')||(source[v]>'z')))
+                v++;
+        }
+        u=i; v=i+1; len2=0;
+        while((u>=0)&&(v<=len-1)) {
+            if((source[u]!=source[v])&&(abs(source[u]-source[v])!=32)) break;
+            len2+=2;
+            if(len2>max_len) {
+                max_len=len2;
+                max_u=u; max_v=v;
+            }
+ 
+            u--; v++;
+ 
+            while((u>=0)&&((source[u]<'A')||(source[u]>'Z')&&(source[u]<'a')||(source[u]>'z')))
+                u--;
+            while((v<=len-1)&&((source[v]<'A')||(source[v]>'Z')&&(source[v]<'a')||(source[v]>'z')))
+                v++;
+        }
+ 
+    }
+    printf("%d\n",max_len);
+    for(i=max_u;i<=max_v;i++) {
+        printf("%c",source[i]);
+        if(cr[i]==1) printf("\n");
+    }
+    if(cr[max_v]!=1) printf("\n");
+    return 0;
+}
+

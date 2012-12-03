@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+void main(){
+	int T,t,len_A,len_B,i,j,flag,bigflag;
+	char A[130],B[21];
+	scanf("%d",&T);
+	for(t=0;t<T;t++){
+		scanf("%s\n%s",A,B);
+		len_A=strlen(A);
+		len_B=strlen(B);
+
+		bigflag=-1;
+		for(i=0;i<len_A-len_B+1;i++){
+			flag=1;
+			for(j=0;j<len_B;j++){
+				if(B[j]!=A[j+i]){
+					flag=-1;
+					break;
+				}
+			}
+			if(flag==1){
+				printf("%d\n",i);
+				bigflag=1;
+				break;
+			}
+		}
+		if(bigflag==-1)
+			printf("-1\n");
+	}
+}
+

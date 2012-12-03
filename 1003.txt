@@ -1,0 +1,86 @@
+/*Time Limited*/
+#include <stdio.h>
+
+int* primenum(int* a,int b){
+	int i,j=0,n,flag;
+	a[j]=2;
+	for(i=3;i<=b;i++){
+		flag=1;
+		for(n=0;(a[n]*a[n])<=i;n++)
+			if(i%a[n]==0) flag=0;
+			if(flag==1){
+				j++;
+				a[j]=i;
+			}
+	}
+	j++;
+	a[j]=0;
+	return(a);
+}
+
+void main(){
+	int c=0,i,j,n=0,temp,max=0,tempi;
+	int prime[10000];
+	int numtimes[100002];
+	int a[1002],b[1002];
+
+	//FILE *fin;
+
+	//fin=fopen("data.txt","r");
+	while(scanf("%d %d",&a[n],&b[n])!=EOF){
+		if(b[n]>max) 
+			max=b[n];
+		n++;
+	}
+	a[n]=0;
+	
+	/*a[0]=2;a[1]=3;a[2]=11;a[3]=0;a[4]=0;
+	b[0]=3;b[1]=5;b[2]=12;b[3]=1000;	
+	max=12;*/
+
+	primenum(prime,max);
+	for(n=0;a[n]!=0;n++){
+		c=0;
+		numtimes[0]=0;
+		numtimes[1]=0;
+		for(i=0;prime[i]!=0;i++)
+			numtimes[prime[i]]=1;
+
+		for(i=0;prime[i]*prime[i]<=b[n]&&prime[i]!=0;i++){
+			for(j=i;prime[j]<=b[n]&&prime[j]!=0;j++){
+				if(prime[i]*prime[j]<=b[n]){
+					numtimes[prime[i]*prime[j]]=2;
+				}
+				else break;
+			}
+		}
+
+		for(i=3;i<=b[n];i++){
+			if(!(numtimes[i]<7&&numtimes[i]>0)){
+				if(numtimes[i-1]==1){
+					numtimes[i]=2;
+					continue;
+				}
+
+				else{
+					temp=10;
+					tempi=i;
+					for(j=0;prime[j]<=tempi&&prime[j]!=0;j++){
+						if(tempi%prime[j]==0){
+							tempi=tempi/prime[j];
+							if(numtimes[i/prime[j]]+1<temp) temp=numtimes[i/prime[j]]+1;
+						}
+					}
+					if(temp<numtimes[i-1]+1) numtimes[i]=temp;
+					else numtimes[i]=numtimes[i-1]+1;
+				}
+			} 
+		}
+		
+		
+
+		for(j=a[n];j<=b[n];j++) c=c+numtimes[j];
+		printf("%d\n",c);
+	}
+}
+

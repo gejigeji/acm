@@ -1,0 +1,77 @@
+/*{
+	ID:jdxu1
+	PROG:palsquare
+	LANG:C
+}*/
+
+#include<stdio.h>
+#include<string.h>
+
+char* transform(int ii,int B,char* palsqu){
+	char tempchar;
+	char* p=palsqu;
+	int i=0,temp,length;
+	do{
+		temp=ii%B;
+		ii=ii/B;
+		if(temp>=0&&temp<=9)
+			palsqu[i]=temp+'0';
+		else
+			palsqu[i]=temp-10+'A';
+		i++;
+		length=i;
+	} while(ii!=0);
+	palsqu[length]='\0';
+
+	for(i=0;i<length/2;i++){
+		tempchar=palsqu[i];
+		palsqu[i]=palsqu[length-1-i];
+		palsqu[length-1-i]=tempchar;
+	}
+
+	return p;
+}
+
+int judpalsqu(int i2,int B){
+	char palsqu[20];
+	int i=0,temp,length;
+	do{ 
+		temp=i2%B;
+		i2=i2/B;
+		if(temp>=0&&temp<=9)
+			palsqu[i]=temp+'0';
+		else
+			palsqu[i]=temp-10+'A';
+		i++;
+		length=i;
+	} while(i2!=0);
+	palsqu[length]='\0';
+
+	
+	for(i=0;i<length/2;i++){
+		if(palsqu[i]!=palsqu[length-1-i])
+			return 0;
+	}
+	return 1;
+}
+
+
+void main(){
+	FILE *fin,*fout;
+	int B,i;
+	char palsqu[20];
+	
+	fin=fopen("palsquare.in","r");
+	fout=fopen("palsquare.out","w");
+	
+	fscanf(fin,"%d",&B);
+	
+	for(i= 1;i<=300;i++){
+		if(judpalsqu(i*i,B)){
+			fprintf(fout,"%s ",transform(i,B,palsqu));
+			fprintf(fout,"%s\n",transform(i*i,B,palsqu));
+		}
+	}
+
+	exit (0);
+}

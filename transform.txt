@@ -1,0 +1,133 @@
+/*{
+ID:jdxu1
+PROG:transform
+LANG:C
+}*/
+
+#include<stdio.h>
+#include<string.h>
+
+int
+squcmp(char a[10][10],char b[10][10],int n){
+	int i,j;
+	for(i=0;i<n;i++){
+		for(j=0;j<n;j++){
+			if(a[i][j]!=b[i][j])
+				return 0;
+		}
+	}
+	return 1;
+}
+
+void
+spin90(char a[10][10],int n){
+	int i,j;
+	char b[10][10];
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			b[i][j]=a[n-1-j][i];
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			a[i][j]=b[i][j];
+}
+
+void
+reflact(char a[10][10],int n){
+	int i,j;
+	char b[10][10];
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			b[i][j]=a[i][n-1-j];
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			a[i][j]=b[i][j];
+}
+
+int
+main(){
+	FILE *fin,*fout;
+	int i,j,n;
+	char temp;
+	char square[10][10];
+	char nsquare[10][10];
+
+	fin=fopen("transform.in","r");
+	fout=fopen("transform.out","w");
+
+	fscanf(fin,"%d",&n);
+
+	getc(fin);
+
+	for(i=0;i<n;i++){
+		for(j=0;j<n;j++){
+			temp=getc(fin);
+			if(temp!='\n')
+				square[i][j]=temp;
+			else
+				j--;
+		}
+	}
+	
+	for(i=0;i<n;i++){
+		for(j=0;j<n;j++){
+			temp=getc(fin);
+			if(temp!='\n')
+				nsquare[i][j]=temp;
+			else
+				j--;
+		}
+	}
+
+	spin90(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"1\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"2\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"3\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	reflact(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"4\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"5\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"5\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"5\n");
+		exit (0);
+	}
+
+	spin90(square,n);
+	reflact(square,n);
+	if(squcmp(square,nsquare,n)){
+		fprintf(fout,"6\n");
+		exit (0);
+	}
+	
+	fprintf(fout,"7\n");
+	return 0;
+}

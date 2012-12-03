@@ -1,0 +1,44 @@
+/*{
+ID:jdxu1
+PROG:namenum
+LANG:C
+}*/
+
+#include  <stdio.h>
+#include <string.h>
+int main () {
+	FILE *fin = fopen ("namenum.in", "r"); 
+	FILE *fout = fopen ("namenum.out", "w");
+
+	int n=4617,m[13],i,j,accept;
+	int flag=1,length,judge[12];
+	char dict[4617][13],temp;
+	char num[8][3]={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','R','S','T','U','V','W','X','Y'};
+	
+	
+	for(i=0;i<13;i++){
+		temp=getc(fin);
+		if(temp!='\n')
+			m[i]=temp-'2';
+		else {length=i; break;}
+	}
+	
+	fin=fopen ("dict.txt", "r"); 
+	for(i=0;i<n;i++){
+		accept=1;
+		fscanf(fin,"%s",dict[i]);
+		if(dict[i][length]!='\0') continue;
+		for(j=0;j<length;j++){
+			judge[j]=(dict[i][j]==num[m[j]][0])||(dict[i][j]==num[m[j]][1])||(dict[i][j]==num[m[j]][2]);
+			accept=accept&&judge[j]; 
+		}
+		if(accept){
+			fprintf(fout,"%s\n",dict[i]);
+			flag=0;
+		}
+	}
+
+	if(flag)
+		fprintf(fout,"NONE\n");
+	exit (0); 
+} 

@@ -1,0 +1,51 @@
+/*{
+ID:jdxu1
+PROG:milk
+LANG:C
+}*/
+
+#include<stdio.h>
+
+int a[5000],b[5000];
+
+int iteration(int M,int N){
+	int i,mina=1001,position;
+	int money,temp;
+	if(M==0) return 0;
+	for(i=0;i<N;i++){ 
+		if(a[i]<mina){ 
+			mina=a[i];
+			position=i;
+		}
+	}
+	if(b[position]<=M){ 
+		M=M-b[position];
+		temp=a[position]*b[position];
+		b[position]=0;
+		a[position]=1001;
+		money=temp+iteration(M,N);
+	}
+	else{ 
+		money=a[position]*M;
+	}
+	return money;
+}
+
+void  main(){
+	int M,N,i;
+
+	FILE *fin,*fout;
+	fin=fopen("milk.in","r");
+	fout=fopen("milk.out","w");
+
+	fscanf(fin,"%d %d",&M,&N);
+	for(i=0; i<N;i++){
+		fscanf(fin,"%d %d",&a[i],&b[i]);
+	}
+	if(N==0||M==0)
+		fprintf(fout,"0\n");
+		else
+			fprintf(fout,"%d\n",iteration(M,N));
+	exit(0);
+}
+

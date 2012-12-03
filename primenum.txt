@@ -1,0 +1,63 @@
+/*Time Limited*/
+#include <stdio.h>
+
+int* primenum(int* a,int b){
+	int i,j=0,n,flag;
+	a[j]=2;
+	for(i=3;i<b;i++){
+		flag=1;
+		for(n=0;(a[n]*a[n])<=i;n++)
+			if(i%a[n]==0) flag=0;
+			if(flag==1){
+				j++;
+				a[j]=i;
+			}
+	}
+	j++;
+	a[j]=0;
+	return(a);
+}
+
+void main(){
+	int a,b,c=0,i,j,n,times,temp;
+	int prime[1000];
+	int prinums[8];
+	int numtimes[1000];
+
+//	while(scanf("%d %d",&a,&b)!=-1){
+	a=1;b=1000;
+		primenum(prime,b);
+		numtimes[0]=0;
+		for(i=1;i<b;i++){
+			j=0;
+			n=0;
+			times=18;
+			prinums[0]=0;
+			while((i+1)>prime[j]&&prime[j]!=0){
+				if((i+1)%prime[j]==0){
+					n++;
+					prinums[n]=prime[j];
+				}
+				j++;
+			}
+			prinums[0]=n;
+
+			if(prinums[0]==0) {numtimes[i]=1;continue;}
+			for(j=0;j<prinums[0];j++){
+				temp=numtimes[(i+1)/prinums[j+1]-1]+1;
+				if(temp<times) times=temp;
+			}
+			
+			if(times>(numtimes[i-1]+1))
+				times=numtimes[i-1]+1;
+
+			numtimes[i]=times;
+		}
+
+		for(j=a;j<=b;j++) c=c+numtimes[j-1];
+		printf("%d\n",c);
+//	}
+}
+
+
+

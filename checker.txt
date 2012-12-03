@@ -1,0 +1,74 @@
+/*{
+ID:jdxu1
+PROG:checker
+LANG:C
+}*/
+
+#include<stdio.h>
+#include<string.h>
+
+int a[13][13]={0};
+int max;
+int times=0;
+int N=0;
+
+int canplacequeen(int row,int column){
+	int i,j;
+	for(i=0;i<max;i++)
+	{if(a[row][i]==1) return 0;}
+	i=row;j=column;
+	while(i>=0&&i<max&&j>=0&&j<max){
+		if(a[i][j]==1) return 0;
+		i--;j--;
+	}
+	i=row;j=column;
+	while(i>=0&&i<max&&j>=0&&j<max){
+		if(a[i][j]==1) return 0;
+		i++;j--;
+	}
+	return 1;
+}
+
+void placequeen(int column,FILE* fout){
+	int i,j,row;
+	if(column==max){
+		N++;
+		if(times<3){
+		for(i=0;i<max-1;i++){
+			for(j=0;j<max;j++){
+				if(a[i][j]==1) fprintf(fout,"%d ",j+1);
+			}
+		}
+		for(j=0;j<max;j++){
+			if(a[max-1][j]==1) fprintf(fout,"%d\n",j+1);
+		}
+		times++;
+		}
+	}
+	for(row=0;row<max;row++){
+		if(canplacequeen(row,column)){
+			a[row][column]=1;
+			placequeen(column+1,fout);
+			a[row][column]=0;
+		}
+	}
+}
+
+
+void main(){
+	int i,j;
+	FILE *fin,*fout;
+	fin=fopen("checker.in","r");
+	fout=fopen("checker.out","w");
+
+	fscanf(fin,"%d",&max);
+	placequeen(0,fout);
+	fprintf(fout,"%d",N);
+
+	
+}
+
+
+
+
+

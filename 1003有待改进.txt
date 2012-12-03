@@ -1,0 +1,61 @@
+/*Time Limited*/
+#include <stdio.h>
+
+int* primenum(int* a,int b){
+	int i,j=0,n,flag;
+	a[j]=2;
+	for(i=3;i<=b;i++){
+		flag=1;
+		for(n=0;(a[n]*a[n])<=i;n++)
+			if(i%a[n]==0) flag=0;
+			if(flag==1){
+				j++;
+				a[j]=i;
+			}
+	}
+	j++;
+	a[j]=0;
+	return(a);
+}
+
+void main(){
+	int a,b,c=0,i,j,n,times,temp;
+	int prime[1000];
+	int numtimes[1002];
+
+	
+//	while(scanf("%d %d",&a,&b)!=-1){
+	a=1;b=1000;
+		primenum(prime,b);
+		numtimes[0]=0;
+		numtimes[1]=0;
+		for(i=0;prime[i]!=0;i++)
+			numtimes[prime[i]]=1;
+		for(i=0;prime[i]<=b&&prime[i]!=0;i++){
+			for(j=i;prime[j]<=b&&prime[j]!=0;j++){
+				if(prime[i]*prime[j]<=b){
+					numtimes[prime[i]*prime[j]]=2;
+				}
+			}
+		}
+		
+		for(i=2;i<=b;i++){
+			for(j=0;prime[j]*i<=b;j++){
+				//下几步有问题 if的限定局限
+				if(!(numtimes[prime[j]*i]>=1&&numtimes[prime[j]*i]<=7)){
+					if(numtimes[i]<numtimes[prime[j]*i-1])
+						numtimes[prime[j]*i]=numtimes[i]+1;
+					else
+						numtimes[prime[j]*i]=numtimes[prime[j]*i-1]+1;
+				}
+			}
+		}
+
+		for(j=a;j<=b;j++) c=c+numtimes[j];
+		printf("%d\n",c);
+//	}
+}
+
+
+
+

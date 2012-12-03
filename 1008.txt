@@ -1,0 +1,35 @@
+#include<stdio.h>
+
+void main(){
+	int N,i,j,k;
+	int a[1000],b[1000];
+	int starnum,max;
+    long NN,MM;
+	scanf("%d",&N);
+	if(N==0){printf("0\n");}
+	else if(N==1) {printf("1\n");}
+	else{
+	for(i=0;i<N;i++){
+		scanf("%d %d",&a[i],&b[i]);
+	}
+	max=0;
+	for(i=0;i<N-1;i++){
+		for(j=i+1;j<N;j++){
+			starnum=0;
+			for(k=0;k<N;k++){
+				if(k!=i&&k!=j){
+					NN=(long)(b[i]-b[j])*(long)(a[k]-a[i]);
+                    MM=(long)(a[i]-a[j])*(long)(b[k]-b[i]);
+					if(NN==MM){
+						starnum++;
+					}
+				}
+			}
+			if(starnum>max) max=starnum;
+		}
+	}
+	printf("%d\n",max+2);
+}
+}
+			
+

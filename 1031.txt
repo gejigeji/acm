@@ -1,0 +1,21 @@
+#include <stdio.h>
+void main(){
+	int t,i,T,N,A,B,C,D,sum=0;
+	scanf("%d",&T);
+	for(t=0;t<T;t++){
+		scanf("%d %d %d",&N,&A,&B);
+		if(A>B){
+			C=A;
+			A=B;
+			B=C;
+		}
+		for(i=0;i<N-1;i++){
+			scanf("%d",&D);
+			if(i+1>=A&&i+1<B)
+			sum=sum+D;
+		}
+		printf("%d\n",sum);
+		sum=0;
+	}
+}
+

@@ -1,0 +1,31 @@
+/*{
+ID:jdxu1
+PROG:friday
+LANG:C
+}*/
+
+#include <stdio.h>
+int mon[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+int day[7];
+
+int main(){
+	FILE *fin=fopen("friday.in","r");
+	FILE *fout=fopen("friday.out","w");
+	int i,j,l=6,n;
+	fscanf(fin,"%d",&n);
+	n+=1900;
+	for(i=1900;i<n;i++){
+		if((i%100!=0&&i%4==0)||i%400==0)mon[1]++;
+		for(j=0;j<12;j++){
+			day[l]++;
+			l+=mon[j];
+			l%=7;
+		}
+		mon[1]=28;
+	}
+	fprintf(fout,"%d",day[6]);
+	for(i=0;i<6;i++)
+		fprintf(fout," %d",day[i]);
+	fprintf(fout,"\n");
+	exit(0);
+}

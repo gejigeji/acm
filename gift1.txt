@@ -1,0 +1,40 @@
+/*{
+ID:jdxu1
+PROG:gift1
+LANG:C
+}*/
+
+#include  <stdio.h>
+#include <string.h>
+int main () {
+	FILE *fin = fopen ("gift1.in", "r"); 
+	FILE *fout = fopen ("gift1.out", "w");
+	char a[10][14]={0},b[14]={0};
+	int i,j,k;
+	int n,q,p[2],s[10]={0};
+	fscanf(fin,"%d",&n);
+	for(i=0;i<n;i++)
+		fscanf(fin,"%s",a[i]);
+	for(i=0;i<n;i++)
+	{
+	j=0;
+	fscanf(fin,"%s",b);
+	while(strcmp(a[j],b)) j++;
+	fscanf(fin,"%d %d",&p[0],&p[1]);
+	if(p[1]==0) q=0;
+	else q=p[0]/p[1];
+	s[j]=s[j]-q*p[1];
+	for (k=0;k<p[1];k++)
+	{
+	j=0;
+	fscanf(fin,"%s",b);
+	while(strcmp(a[j],b)) j++;
+	s[j]=s[j]+q;
+	}
+	}
+	for(i=0;i<n;i++)
+		fprintf(fout,"%s %d\n",a[i],s[i]);
+	fclose(fin);
+	fclose(fout);
+	exit (0); 
+} 
