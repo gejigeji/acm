@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+#define LEN 30000
+int cal_num(int (*Tran)[2], int C){
+	int i=0;
+	while(Tran[C][0]!=0){
+		i++;
+		C=Tran[C][0];
+	}
+	return i;
+}
+
+int catch_head_or_tail(int (*Tran)[2],int M,int which){
+	if(which==1){
+		while(Tran[M][0]!=0){
+			M=Tran[M][0];
+		}
+		return M;
+	}
+	else{
+		while(Tran[M][1]!=0){
+			M=Tran[M][1];
+		}
+		return M;
+	}
+}
+
+void add(int (*Tran)[2],int M1,int M2){
+	int head,tail;
+	head=catch_head_or_tail(Tran,M1,1);
+	tail=catch_head_or_tail(Tran,M2,0);
+	Tran[head][0]=tail;
+	Tran[tail][1]=head;
+}
+
+void main(){
+	int M;
+	int i=0;
+	int num;
+	char S[2];
+	int M1,M2,C;
+	int Tran[LEN][2]={0};
+	scanf("%d",&M);
+	while((scanf("%s",S)!=EOF && i<M)){
+		if(S[0]=='M'){
+			scanf("%d %d",&M1,&M2);
+			add(Tran,M1,M2);
+		}
+		else{
+			scanf("%d",&C);
+			num=cal_num(Tran,C);
+			printf("%d\n",num);
+		}
+		i++;
+	}
+}

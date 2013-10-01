@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+char* div2(char* n){
+	int i,j=0,len_n,p=0,q=0;
+	char new_n[110];
+	len_n=strlen(n);
+	for(i=0;i<len_n;i++){
+		q=(n[i]-'0'+p*10)/2;
+		p=(n[i]-'0'+p*10)%2;
+		if(!(i==0&&q==0)){
+			new_n[j]=q+'0';
+			j++;
+		}
+	}
+	new_n[j]='\0';
+	return new_n;
+}
+
+int N_1(char* n){
+	int s,i=0,len_n;
+	while(n[0]!=0){
+		len_n=strlen(n);
+		s=n[len_n-1]-'0';
+		s=s%2;
+		strcpy(n,div2(n));
+		if(s==1)
+			i++;
+	}
+	return i;
+}
+
+void main(){
+	char a[110],b[110];
+	int A,B;
+	while(scanf("%s",a)!=EOF){
+		scanf("%s",b);
+		A=N_1(a);
+		B=N_1(b);
+		if(A==B) printf("neither\n");
+		else if(A>B) printf("wm\n");
+		else printf("zyf\n");
+	}
+}
+
