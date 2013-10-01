@@ -148,13 +148,13 @@ void main(){
     link->num = 0;
     link->next = NULL;
 	for(i=0;i<N-1;i++){
-    scanf("%d %d %d",&start,&end,&applenums);
-    if(addplace=if_in_link(link,start)){
-        link=addnode(addplace,end,applenums,link);
-    }
-    else if(addplace=if_in_link(link,end)){
-        link=addnode(addplace,start,applenums,link);
-    }
+   		scanf("%d %d %d",&start,&end,&applenums);
+    	if(addplace=if_in_link(link,start)){
+        	link=addnode(addplace,end,applenums,link);
+    	}
+    	else if(addplace=if_in_link(link,end)){
+        	link=addnode(addplace,start,applenums,link);
+    	}
 	}
 
 	printf("%d\n",most(root, Q));
